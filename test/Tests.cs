@@ -55,7 +55,51 @@ namespace Tests
 
         [Theory]
         [InlineData("1,2", 3)]
+        [InlineData("9,21", 30)]
+        [InlineData("19,37", 56)]
         public void Returns_sum_of_two_numbers_separated_by_comma(string x, int y)
+        {
+            //Given
+            arguments = new string[]{x};
+            
+            //When
+            Program.Main(arguments);   
+
+            //Then
+            Assert.Equal(y, int.Parse(consoleOut.ToString()));
+        }
+
+        [Theory]
+        [InlineData("1,2,9,10,15", 37)]
+        public void Returns_sum_of_unknown_amount_of_numbers_separated_by_comma(string x, int y)
+        {
+            //Given
+            arguments = new string[]{x};
+            
+            //When
+            Program.Main(arguments);   
+
+            //Then
+            Assert.Equal(y, int.Parse(consoleOut.ToString()));
+        }
+
+        [Theory]
+        [InlineData("1\n2,3", 6)]
+        public void Allow_the_Add_method_to_handle_new_lines_between_numbers(string x, int y)
+        {
+            //Given
+            arguments = new string[]{x};
+            
+            //When
+            Program.Main(arguments);   
+
+            //Then
+            Assert.Equal(y, int.Parse(consoleOut.ToString()));
+        }
+
+        [Theory]
+        [InlineData("//;\n1;2", 3)]
+        public void Allow_the_Add_method_with_different_delimiter(string x, int y)
         {
             //Given
             arguments = new string[]{x};
