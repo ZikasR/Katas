@@ -110,5 +110,16 @@ namespace Tests
             //Then
             Assert.Equal(y, int.Parse(consoleOut.ToString()));
         }
+
+        [Fact]
+        public void Calling_Add_with_a_negative_number_will_throw_an_exception()
+        {
+            //Given
+            arguments = new string[]{"1,-2,-9,10,-15"};
+        
+            Exception ex = Assert.Throws<ArgumentException>(() => Program.Main(arguments));
+        
+            Assert.Equal("negatives not allowed : -2,-9,-15", ex.Message);
+        }
     }
 }

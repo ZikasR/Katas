@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StringSumKata
 
@@ -20,17 +21,39 @@ namespace StringSumKata
                 }
                 }
 
-                string[] values = args[0].Split(delimiters.ToArray());
-                int integerValue;
+                List<int> numbers = getIntegersFromString(args[0], delimiters.ToArray());
 
-                foreach (var @value in values)
+                List<int> negativeNumbers = numbers.Where(n=> n<0).ToList();
+
+                if(negativeNumbers.Count > 0){
+                    throw new ArgumentException("negatives not allowed : " + string.Join(",", negativeNumbers.ToArray()));
+                }
+
+                foreach (var @value in numbers)
                 {
-                    if(int.TryParse(@value, out integerValue))
-                    result += integerValue;
+                    result += @value;
                 }
             }
             
             Console.Write(result);
+        }
+
+        private static List<int> getIntegersFromString(string values, char[] delimiters){
+
+            string[] stringValues = values.Split(delimiters);
+            List<int> result = new List<int>();
+            int integerValue;
+
+            foreach (string item in stringValues)
+            {
+                if(int.TryParse(item, out integerValue))
+                {                
+                    result.Add(integerValue);
+                }
+            }
+
+            return result;        
+
         }
     }
 }
